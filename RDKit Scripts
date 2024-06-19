@@ -1,0 +1,28 @@
+from rdkit import Chem
+from rdkit.Chem import Descriptors
+
+def calculate_exact_mass(molecular_formula):
+    try:
+        # Generate an RDKit molecule object from the molecular formula
+        molecule = Chem.MolFromSmiles(molecular_formula)
+
+        # Check if the conversion was successful
+        if molecule is not None:
+            # Calculate the exact mass
+            exact_mass = Descriptors.ExactMolWt(molecule)
+            return exact_mass
+        else:
+            return "Invalid molecular formula."
+
+    except Exception as e:
+        return str(e)
+
+# Input the molecular formula
+molecular_formula = "C6H12O6"  # Example: Glucose
+
+# Calculate and print the exact mass
+exact_mass = calculate_exact_mass(molecular_formula)
+if isinstance(exact_mass, float):
+    print(f"The exact mass of the molecule is {exact_mass:.4f} Da")
+else:
+    print(f"Error: {exact_mass}")
